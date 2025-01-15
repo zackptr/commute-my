@@ -16,6 +16,7 @@ export default defineConfig({
     includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
     manifest: {
       name: "PubSit",
+      start_url: "/",
       short_name: "PubSit",
       theme_color: "#000000",
       display: "standalone",
