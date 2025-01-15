@@ -29,6 +29,7 @@
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
     "vite-plugin-pwa": "^0.21.1",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "wrangler": "^3.102.0"
   }
 }
