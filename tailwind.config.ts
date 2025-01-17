@@ -16,6 +16,20 @@ export default {
           '"Noto Color Emoji"',
         ],
       },
+      colors: {
+        lrt: {
+          ag: "#F5911F",
+          kj: "#ED0F4C",
+          sp: "#8D0C06",
+        },
+        mrt: {
+          kg: "#008640",
+          py: "#FBCD20",
+        },
+        mr: {
+          kl: "#81BC00",
+        },
+      },
     },
   },
   plugins: [],
