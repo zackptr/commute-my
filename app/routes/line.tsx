@@ -68,7 +68,7 @@ export default function Line() {
                                         {station.interchangeStations && (
                                             <div className="space-y-2">
                                                 <h3>Interchange Stations</h3>
-                                                <div className="grid md:grid-cols-4 gap-4 mt-2">
+                                                <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
                                                     {station.interchangeStations.map((intStationId) => {
                                                         const intStation = getStation(intStationId);
                                                         const line = getLineByStation(intStationId);
@@ -86,15 +86,15 @@ export default function Line() {
                                         {station.connectingStations && (
                                             <div className="space-y-2">
                                                 <h3>Connecting Stations</h3>
-                                                <div className="grid md:grid-cols-4 gap-4 mt-2">
-                                                    {station.connectingStations.map((intStationId) => {
-                                                        const intStation = getStation(intStationId);
-                                                        const line = getLineByStation(intStationId);
+                                                <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
+                                                    {station.connectingStations.map((connStationId) => {
+                                                        const connStation = getStation(connStationId);
+                                                        const line = getLineByStation(connStationId);
 
-                                                        return intStation && line && (
-                                                            <div key={intStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg`}>
+                                                        return connStation && line && (
+                                                            <div key={connStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg`}>
                                                                 <Train className="w-4 h-4" />
-                                                                <span className="text-sm">{intStation.id} {intStation.name}</span>
+                                                                <span className="text-sm">{connStation.id} {connStation.name}</span>
                                                             </div>
                                                         );
                                                     })}
