@@ -50,7 +50,7 @@ export default function Home() {
                         Open
                     </h2>
                     <p className="mt-2">
-                        We stay closely connected with our community, collaborating to make PubSit even more valuable. Explore our source code and contribute on <Link to="https://github.com/zackptr/commute-my" className="underline underline-offset-4">GitHub</Link> — we greatly appreciate your feedback and support!
+                        We stay closely connected with our community, collaborating to make Commute even more valuable. Explore our source code and contribute on <Link to="https://github.com/zackptr/commute-my" className="underline underline-offset-4">GitHub</Link> — we greatly appreciate your feedback and support!
                     </p>
                 </section>
                 <p className="text-xs mt-12">&copy; {new Date().getFullYear()} Zackry Rosli. All rights reserved.</p>    
