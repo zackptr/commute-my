@@ -168,7 +168,7 @@ export const kajangLine: Line = {
         { id: "KG15", name: "Muzium Negara", lat: 3.137317, lng: 101.687336, nearby: ["NU Sentral"], connectingStations: ["KJ15"] },
         { id: "KG16", name: "Pasar Seni", lat: 3.142293265, lng: 101.6955642, interchangeStations: ["KJ14"] },
         { id: "KG17", name: "Merdeka", lat: 3.141969, lng: 101.70205, interchangeStations: ["AG8", "SP8"] },
-        { id: "KG18A", name: "Bukit Bintang", lat: 3.146503, lng: 101.710947, nearby: ["Pavilion Kuala Lumpur", "Fahrenheit88", "Lot 10 Shopping Centre", "Low Yat Plaza", "Sungei Wang Plaza", "Starhill Gallery"], connectingStations: ["MR6"] },
+        { id: "KG18A", name: "Bukit Bintang", lat: 3.146503, lng: 101.710947, nearby: ["Pavilion Kuala Lumpur", "Fahrenheit88", "Lot 10 Shopping Centre", "Low Yat Plaza", "Sungei Wang Plaza", "The Starhill"], connectingStations: ["MR6"] },
         { id: "KG20", name: "Tun Razak Exchange", lat: 3.142403, lng: 101.720156, nearby: ["The Exchange TRX", "Apple The Exchange TRX"], interchangeStations: ["PY23"] },
         { id: "KG21", name: "Cochrane", lat: 3.132829, lng: 101.722962, nearby: ["MyTOWN Shopping Centre", "IKEA Cheras", "Sunway Velocity Mall"] },
         { id: "KG22", name: "Maluri", lat: 3.123623, lng: 101.727809, nearby: ["Sunway Velocity Mall"], interchangeStations: ["AG13"] },
