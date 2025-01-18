@@ -67,8 +67,8 @@ export default function Line() {
 
                                                         return (
                                                             <div key={ix} className={`flex items-center space-x-2 bg-gray-800 px-5 py-2 rounded-lg`}>
-                                                                <Icon className="w-4 h-4" />
-                                                                <span className="text-sm">{place}</span>
+                                                                <Icon className="w-4 h-4 min-w-[1rem]" />
+                                                                <span className="text-sm truncate">{place}</span>
                                                             </div>
                                                         )
                                                     })}
