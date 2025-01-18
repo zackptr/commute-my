@@ -60,7 +60,7 @@ export default function Line() {
                                     <div className="mt-2 space-y-4">
                                         {station.nearby && (
                                             <div className="space-y-2">
-                                                <h3 className="flex items-center"><MapPin className="w-4 h-4 mr-2" /> Places Nearby</h3>
+                                                <h3 className="flex items-center"><MapPin className="w-4 h-4 mr-2" />Nearby Highlights</h3>
                                                 <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
                                                     {station.nearby.map((place, ix) => {
                                                         const Icon = getNearbyIcon(place);
