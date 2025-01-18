@@ -2,6 +2,7 @@ import { TransitionWrapper } from "~/components/TransitionWrapper";
 import type { Route } from "./+types/home";
 import { lines } from "~/lib/line";
 import { Link } from "react-router";
+import { Train } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -24,8 +25,11 @@ export default function Home() {
                     <div className="grid md:grid-cols-3 mt-10 gap-6">
                         {lines.map((line) => (
                             <Link key={line.id} to={`/line/${line.id}`} className={`px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
-                                <span className={`font-bold px-5 py-0.5 rounded-lg ${line.color} bg-opacity-60 shadow-md`}>{line.id}</span>
-                                {line.name} Line
+                                <span className={`flex items-center font-bold px-3 py-0.5 rounded-lg ${line.color} bg-opacity-60 shadow-md`}>
+                                    <Train className="w-5 h-5 mr-2 text-white" />
+                                    {line.id}
+                                </span>
+                                {line.type} {line.name} Line
                             </Link>
                         ))}
                     </div>
