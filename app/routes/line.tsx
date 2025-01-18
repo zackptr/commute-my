@@ -114,7 +114,7 @@ export default function Line() {
                 ): (
                     <p>Line not found.</p>
                 )}
-                <p className="text-xs mt-12">&copy; {new Date().getFullYear()} Zackry Rosli. All right reserved.</p>
+                <p className="text-xs mt-12">&copy; {new Date().getFullYear()} Zackry Rosli. All rights reserved.</p>
             </TransitionWrapper>
         </main>
     );

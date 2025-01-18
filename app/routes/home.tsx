@@ -41,7 +41,7 @@ export default function Home() {
                     <Transportation name="Mass Rapid Transit (MRT)" type="MRT" />
                     <Transportation name="Monorail (MR)" type="MR" />
                 </div>
-                <p className="text-xs mt-12">&copy; {new Date().getFullYear()} Zackry Rosli. All right reserved.</p>
+                <p className="text-xs mt-12">&copy; {new Date().getFullYear()} Zackry Rosli. All rights reserved.</p>
             </TransitionWrapper>
         </main>
     );
