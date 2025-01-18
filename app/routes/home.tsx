@@ -6,12 +6,10 @@ import { Train } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
     return [
-        { title: "PubSit" },
-        {
-            property: "og:title",
-            content: "PubSit",
-        },
+        { title: "Commute" },
         { description: "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists." },
+        { property: "og:title", content: "Commute" },  
+        { property: "og:description", content: "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists." },
     ];
 }
 
@@ -35,7 +33,7 @@ export default function Home() {
                     </div>
                 </section>
                 <section className="mt-20">
-                    <h1 className="text-2xl md:text-4xl font-bold">What is PubSit?</h1>
+                    <h1 className="text-2xl md:text-4xl font-bold">What is Commute?</h1>
                     <h2 className="mt-5 text-lg md:text-xl font-semibold">
                         The Best Way to Plan Your Trip
                     </h2>
@@ -46,13 +44,13 @@ export default function Home() {
                         Motivation
                     </h2>
                     <p className="mt-2">
-                        PubSit was developed for the public good, prioritising user protection from ads and malware found in alternative solutions. We believe software should be open, accessible, and secure.
+                        Commute was developed for the public good, prioritising user protection from ads and malware found in alternative solutions. We believe software should be open, accessible, and secure.
                     </p>
                     <h2 className="mt-4 text-lg md:text-xl font-semibold">
                         Open
                     </h2>
                     <p className="mt-2">
-                        We stay closely connected with our community, collaborating to make PubSit even more valuable. Explore our source code and contribute on <Link to="https://github.com/zackptr/pubsit" className="underline underline-offset-4">GitHub</Link> — we greatly appreciate your feedback and support!
+                        We stay closely connected with our community, collaborating to make PubSit even more valuable. Explore our source code and contribute on <Link to="https://github.com/zackptr/commute-my" className="underline underline-offset-4">GitHub</Link> — we greatly appreciate your feedback and support!
                     </p>
                 </section>
                 <p className="text-xs mt-12">&copy; {new Date().getFullYear()} Zackry Rosli. All rights reserved.</p>    

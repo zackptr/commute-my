@@ -24,9 +24,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "PubSit",
+        name: "Commute",
         start_url: "/",
-        short_name: "PubSit",
+        short_name: "Commute",
         theme_color: "#000000",
         display: "standalone",
         icons: [
