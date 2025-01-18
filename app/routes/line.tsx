@@ -53,9 +53,9 @@ export default function Line() {
                                         {index < line.stations.length - 1 && <div className={`w-1 ${station.nearby || station.connectingStations || station.interchangeStations ? "h-full": "h-6"} ${line.color} mt-2`} />}
                                     </div>
                                 </div>
-                                <div className="flex-grow">
+                                <div>
                                     <h3 className="text-lg font-semibold">
-                                        {station.id} {station.name}
+                                        {station.name} {station.id}
                                     </h3>
                                     <div className="mt-2 space-y-4">
                                         {station.nearby && (
@@ -66,9 +66,9 @@ export default function Line() {
                                                         const Icon = getNearbyIcon(place);
 
                                                         return (
-                                                            <div key={ix} className={`flex items-center space-x-2 bg-gray-800 px-5 py-2 rounded-lg`}>
-                                                                <Icon className="w-4 h-4 min-w-[1rem]" />
-                                                                <span className="text-sm truncate">{place}</span>
+                                                            <div key={ix} className={`flex items-center space-x-2 bg-gray-800 px-5 py-2 rounded-lg w-full min-w-0`}>
+                                                                <Icon className="w-4 h-4 flex-shrink-0" />
+                                                                <span className="text-sm truncate min-w-0">{place}</span>
                                                             </div>
                                                         )
                                                     })}
@@ -86,7 +86,7 @@ export default function Line() {
                                                         return intStation && line && (
                                                             <Link to={`/line/${line.id}#${intStation.id}`} key={intStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
                                                                 <Train className="w-4 h-4" />
-                                                                <span className="text-sm">{intStation.id} {line.type} {intStation.name}</span>
+                                                                <span className="text-sm">{line.type} {intStation.name} {intStation.id}</span>
                                                             </Link>
                                                         );
                                                     })}
@@ -104,7 +104,7 @@ export default function Line() {
                                                         return connStation && line && (
                                                             <Link to={`/line/${line.id}#${connStation.id}`} key={connStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
                                                                 <Train className="w-4 h-4" />
-                                                                <span className="text-sm">{connStation.id} {line.type} {connStation.name}</span>
+                                                                <span className="text-sm">{line.type} {connStation.name} {connStation.id}</span>
                                                             </Link>
                                                         );
                                                     })}
