@@ -6,6 +6,11 @@ import { Link } from "react-router";
 export function meta({}: Route.MetaArgs) {
     return [
         { title: "PubSit" },
+        {
+            property: "og:title",
+            content: "PubSit",
+        },
+        { description: "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists." },
     ];
 }
 

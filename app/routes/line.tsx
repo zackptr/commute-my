@@ -19,9 +19,14 @@ function getNearbyIcon(place: string): React.ElementType {
 }
 
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "PubSit" },
-  ];
+    return [
+        { title: "PubSit" },
+        {
+            property: "og:title",
+            content: "PubSit",
+        },
+        { description: "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists." },
+    ];
 }
 
 export default function Line() {
