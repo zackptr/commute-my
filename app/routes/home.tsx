@@ -21,7 +21,7 @@ function Transportation({
             <h2 className="font-semibold text-2xl md:text-3xl mb-4">{name}</h2>
             <div className="flex flex-col gap-4">
                 {getLinesByType(type).map((line) => (
-                    <Link key={line.id} to={`/line/${line.id}`} className={`px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50`}>
+                    <Link key={line.id} to={`/line/${line.id}`} className={`px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
                         <span className={`font-bold px-5 py-0.5 rounded-lg ${line.color} bg-opacity-60 shadow-md`}>{line.id}</span>
                         {line.name} Line
                     </Link>

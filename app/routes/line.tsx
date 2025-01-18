@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import { getLineById, getLineByStation, getStation } from "~/lib/line";
-import { useParams } from "react-router";
-import { Train, ShoppingBag, Building, TreesIcon as Tree, ArrowLeftFromLine } from "lucide-react";
+import { Link, useParams } from "react-router";
+import { Train, ShoppingBag, Building, TreesIcon as Tree, ArrowLeftFromLine, Footprints, ArrowUpDown, MapPin } from "lucide-react";
 import { useNavigate } from "react-router";
 import { TransitionWrapper } from "~/components/TransitionWrapper";
 
@@ -39,12 +39,14 @@ export default function Line() {
                 {line ? (
                     <div className="flex flex-col space-y-8 mt-8">
                         {line.stations.map((station, index) => (
-                            <div key={station.name} className="flex items-start space-x-4">
-                                <div className="flex flex-col items-center">
+                            <div id={station.id} key={station.id} className="flex space-x-4">
+                                <div className="flex flex-col items-center min-h-max">
                                     <div className={`w-8 h-8 rounded-full ${line.color} flex items-center justify-center`}>
                                         <Train className="w-5 h-5 text-white" />
                                     </div>
-                                    {index < line.stations.length - 1 && <div className={`w-1 h-24 ${line.color} mt-2`} />}
+                                    <div className="flex-grow">
+                                        {index < line.stations.length - 1 && <div className={`w-1 ${station.nearby || station.connectingStations || station.interchangeStations ? "h-full": "h-6"} ${line.color} mt-2`} />}
+                                    </div>
                                 </div>
                                 <div className="flex-grow">
                                     <h3 className="text-lg font-semibold">
@@ -53,31 +55,34 @@ export default function Line() {
                                     <div className="mt-2 space-y-4">
                                         {station.nearby && (
                                             <div className="space-y-2">
-                                                <h3>Places Nearby</h3>
-                                                {station.nearby.map((place, placeIndex) => {
-                                                    const Icon = getNearbyIcon(place)
-                                                    return (
-                                                        <div key={placeIndex} className="flex items-center space-x-2">
-                                                            <Icon className="w-4 h-4" />
-                                                            <span className="text-sm">{place}</span>
-                                                        </div>
-                                                    )
-                                                })}
+                                                <h3 className="flex items-center"><MapPin className="w-4 h-4 mr-2" /> Places Nearby</h3>
+                                                <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
+                                                    {station.nearby.map((place, ix) => {
+                                                        const Icon = getNearbyIcon(place);
+
+                                                        return (
+                                                            <div key={ix} className={`flex items-center space-x-2 bg-gray-800 px-5 py-2 rounded-lg`}>
+                                                                <Icon className="w-4 h-4" />
+                                                                <span className="text-sm">{place}</span>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
                                             </div>
                                         )}
                                         {station.interchangeStations && (
                                             <div className="space-y-2">
-                                                <h3>Interchange Stations</h3>
+                                                <h3 className="flex items-center"><ArrowUpDown className="w-4 h-4 mr-2" /> Interchange Stations</h3>
                                                 <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
                                                     {station.interchangeStations.map((intStationId) => {
                                                         const intStation = getStation(intStationId);
                                                         const line = getLineByStation(intStationId);
 
                                                         return intStation && line && (
-                                                            <div key={intStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg`}>
+                                                            <Link to={`/line/${line.id}#${intStation.id}`} key={intStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
                                                                 <Train className="w-4 h-4" />
-                                                                <span className="text-sm">{intStation.id} {intStation.name}</span>
-                                                            </div>
+                                                                <span className="text-sm">{intStation.id} {line.type} {intStation.name}</span>
+                                                            </Link>
                                                         );
                                                     })}
                                                 </div>
@@ -85,17 +90,17 @@ export default function Line() {
                                         )}
                                         {station.connectingStations && (
                                             <div className="space-y-2">
-                                                <h3>Connecting Stations</h3>
+                                                <h3 className="flex items-center"><Footprints className="w-4 h-4 mr-2" /> Connecting Stations</h3>
                                                 <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
                                                     {station.connectingStations.map((connStationId) => {
                                                         const connStation = getStation(connStationId);
                                                         const line = getLineByStation(connStationId);
 
                                                         return connStation && line && (
-                                                            <div key={connStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg`}>
+                                                            <Link to={`/line/${line.id}#${connStation.id}`} key={connStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
                                                                 <Train className="w-4 h-4" />
-                                                                <span className="text-sm">{connStation.id} {connStation.name}</span>
-                                                            </div>
+                                                                <span className="text-sm">{connStation.id} {line.type} {connStation.name}</span>
+                                                            </Link>
                                                         );
                                                     })}
                                                 </div>
