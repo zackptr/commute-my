@@ -1,34 +1,12 @@
 import { TransitionWrapper } from "~/components/TransitionWrapper";
 import type { Route } from "./+types/home";
-import { getLinesByType, type LineType } from "~/lib/line";
+import { lines } from "~/lib/line";
 import { Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
     return [
         { title: "PubSit" },
     ];
-}
-
-function Transportation({
-    name,
-    type,
-}: {
-    name: string;
-    type: LineType;
-}) {
-    return (
-        <div>
-            <h2 className="font-semibold text-2xl md:text-3xl mb-4">{name}</h2>
-            <div className="flex flex-col gap-4">
-                {getLinesByType(type).map((line) => (
-                    <Link key={line.id} to={`/line/${line.id}`} className={`px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
-                        <span className={`font-bold px-5 py-0.5 rounded-lg ${line.color} bg-opacity-60 shadow-md`}>{line.id}</span>
-                        {line.name} Line
-                    </Link>
-                ))}
-            </div>
-        </div>
-    );
 }
 
 export default function Home() {
@@ -39,9 +17,12 @@ export default function Home() {
                     <h1 className="text-4xl md:text-6xl font-bold">Get Started</h1>
                     <p className="mt-4">Explore all MRT and LRT lines in the Klang Valley, including routes, stations, and essential details to plan your journey seamlessly.</p>
                     <div className="grid md:grid-cols-3 mt-10 gap-6">
-                        <Transportation name="Light Rapid Transit (LRT)" type="LRT" />
-                        <Transportation name="Mass Rapid Transit (MRT)" type="MRT" />
-                        <Transportation name="Monorail (MR)" type="MR" />
+                        {lines.map((line) => (
+                            <Link key={line.id} to={`/line/${line.id}`} className={`px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
+                                <span className={`font-bold px-5 py-0.5 rounded-lg ${line.color} bg-opacity-60 shadow-md`}>{line.id}</span>
+                                {line.name} Line
+                            </Link>
+                        ))}
                     </div>
                 </section>
                 <section className="mt-20">
