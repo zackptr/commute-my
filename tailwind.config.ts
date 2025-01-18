@@ -17,6 +17,9 @@ export default {
         ],
       },
       colors: {
+        pubsit: {
+          main: "#161619",
+        },
         lrt: {
           ag: "#F5911F",
           kj: "#ED0F4C",
