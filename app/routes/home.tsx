@@ -24,7 +24,7 @@ export default function Home() {
                     <p className="mt-4">Explore all MRT and LRT lines in the Klang Valley, including routes, stations, and essential details to plan your journey seamlessly.</p>
                     <div className="grid md:grid-cols-3 mt-10 gap-6">
                         {lines.map((line) => (
-                            <Link key={line.id} to={`/line/${line.id}`} className={`px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
+                            <Link key={line.id} to={`/line/${line.id}`} className={`font-semibold tracking-wide px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
                                 <span className={`flex items-center font-bold px-3 py-0.5 rounded-lg ${line.color} bg-opacity-60 shadow-md`}>
                                     <Train className="w-5 h-5 mr-2 text-white" />
                                     {line.id}
