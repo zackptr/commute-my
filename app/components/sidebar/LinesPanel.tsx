@@ -1,4 +1,4 @@
-import type { Line } from '~/types/map';
+import type { Line, Station } from '~/types/map';
 import { LINE_COLORS } from '~/types/map';
 
 type LinesPanelProps = {
@@ -7,6 +7,11 @@ type LinesPanelProps = {
   toggleLineExpansion: (lineId: string) => void;
   setSelectedLine: (line: Line) => void;
   map: any;
+  searchQuery: string;
+  filteredStations: Station[];
+  handleStationSelect: (station: Station) => void;
+  selectingFor: 'from' | 'to' | null;
+  lines: Line[];
 };
 
 export function LinesPanel({
@@ -14,14 +19,19 @@ export function LinesPanel({
   expandedLines,
   toggleLineExpansion,
   setSelectedLine,
-  map
+  map,
+  searchQuery,
+  filteredStations,
+  handleStationSelect,
+  selectingFor,
+  lines
 }: LinesPanelProps) {
   return (
     <div className="p-4 space-y-2">
       {stationsByLine.map((line) => (
-        <div key={line.id} className="bg-white border border-gray-200 rounded-lg">
+        <div key={line.id} className="glass-panel-tab rounded-lg">
           <div 
-            className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-50 rounded-lg"
+            className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-50/50 rounded-lg"
             onClick={() => toggleLineExpansion(line.id)}
           >
             <div className="flex items-center gap-2 flex-1">
@@ -49,11 +59,11 @@ export function LinesPanel({
             </svg>
           </div>
           {expandedLines[line.id] && (
-            <div className="border-t border-gray-200">
+            <div className="border-t border-gray-200/50">
               {line.stations.map((station) => (
                 <div
                   key={station.id}
-                  className="flex items-center gap-2 p-3 hover:bg-gray-50 cursor-pointer"
+                  className="flex items-center gap-2 p-3 hover:bg-gray-50/50 cursor-pointer"
                   onClick={() => {
                     setSelectedLine(line);
                     map?.setView([station.lat, station.lng], 15);

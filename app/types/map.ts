@@ -26,7 +26,7 @@ export type Path = {
   }>;
 };
 
-export type ViewType = 'search' | 'lines' | 'pathfinder';
+export type ViewType = 'lines' | 'pathfinder';
 
 export const MAP_BOUNDS = {
   KL_SELANGOR_BOUNDS: [
@@ -41,10 +41,10 @@ export const MAP_BOUNDS = {
 };
 
 export const LINE_COLORS: Record<string, string> = {
-  'bg-lrt-ag': '#FF0000', // Ampang Line - Red
-  'bg-lrt-sp': '#FF0000', // Sri Petaling Line - Red (same as Ampang)
-  'bg-lrt-kj': '#800080', // Kelana Jaya Line - Purple
-  'bg-mr-kl': '#FFA500',  // Monorail - Orange
-  'bg-mrt-kg': '#00FF00', // Kajang Line - Green
-  'bg-mrt-py': '#0000FF', // Putrajaya Line - Blue
+  'bg-lrt-ag': '#CD7F32', // LRT Ampang Line - Brown
+  'bg-lrt-sp': '#8B0000', // LRT Sri Petaling Line - Dark Red
+  'bg-lrt-kj': '#B91C1C', // LRT Kelana Jaya Line - Red
+  'bg-mr-kl': '#65A30D', // MR Monorail KL Line - Green
+  'bg-mrt-kg': '#047857', // MRT Kajang Line - Dark Green
+  'bg-mrt-py': '#CA8A04', // MRT Putrajaya Line - Gold/Yellow
 }; 

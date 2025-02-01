@@ -10,9 +10,18 @@ type MapContainerProps = {
   highlightedPath: Path | null;
   handleLineClick: (line: Line) => void;
   setMap: (map: any) => void;
+  fromStation?: Station | null;
+  toStation?: Station | null;
 };
 
-export function MapContainer({ selectedLine, highlightedPath, handleLineClick, setMap }: MapContainerProps) {
+export function MapContainer({ 
+  selectedLine, 
+  highlightedPath, 
+  handleLineClick, 
+  setMap,
+  fromStation,
+  toStation 
+}: MapContainerProps) {
   const [MapComponents, setMapComponents] = useState<React.ComponentType | null>(null);
 
   useEffect(() => {
@@ -86,6 +95,8 @@ export function MapContainer({ selectedLine, highlightedPath, handleLineClick, s
                 Polyline={Polyline}
                 CircleMarker={CircleMarker}
                 Popup={Popup}
+                fromStation={fromStation}
+                toStation={toStation}
               />
             </MapContainer>
           );
@@ -98,7 +109,7 @@ export function MapContainer({ selectedLine, highlightedPath, handleLineClick, s
     }
 
     loadMap();
-  }, [selectedLine, highlightedPath, handleLineClick, setMap]);
+  }, [selectedLine, highlightedPath, handleLineClick, setMap, fromStation, toStation]);
 
   if (!MapComponents) {
     return <div className="w-full h-screen flex items-center justify-center">Loading map...</div>;
@@ -114,118 +125,121 @@ type MapLinesProps = {
   Polyline: any;
   CircleMarker: any;
   Popup: any;
+  fromStation?: Station | null;
+  toStation?: Station | null;
 };
 
-function MapLines({ selectedLine, highlightedPath, handleLineClick, Polyline, CircleMarker, Popup }: MapLinesProps) {
+function MapLines({ 
+  selectedLine, 
+  highlightedPath, 
+  handleLineClick, 
+  Polyline, 
+  CircleMarker, 
+  Popup,
+  fromStation,
+  toStation 
+}: MapLinesProps) {
   return (
     <>
       {lines.map((line: Line) => {
-        const coordinates = line.stations.map((station) => [
-          station.lat,
-          station.lng,
-        ] as [number, number]);
+        // Break down line into segments between stations
+        const lineSegments = line.stations.slice(0, -1).map((station, index) => ({
+          from: station,
+          to: line.stations[index + 1],
+          coordinates: [
+            [station.lat, station.lng],
+            [line.stations[index + 1].lat, line.stations[index + 1].lng]
+          ] as [number, number][]
+        }));
 
         const isSelected = selectedLine?.id === line.id;
-        const isHighlighted = highlightedPath?.lines.some(l => l.line.id === line.id);
+        const isPathfinderMode = fromStation || toStation;
         
         // Get highlighted stations for this line
         const highlightedStations = highlightedPath?.lines
           .find(l => l.line.id === line.id)?.stations || [];
 
-        // Split the line into segments based on highlighted path
-        const segments: Array<typeof coordinates> = [];
-        let currentSegment: typeof coordinates = [];
+        // Check if segment should be shown
+        const shouldShowSegment = (fromStation: Station, toStation: Station) => {
+          if (!isPathfinderMode) return true;
+          if (!highlightedPath) return false;
 
-        line.stations.forEach((station, index) => {
-          const isHighlightedStation = highlightedStations.some(s => s.id === station.id);
-          const coord: [number, number] = [station.lat, station.lng];
-
-          if (isHighlightedStation) {
-            currentSegment.push(coord);
-          } else if (currentSegment.length > 0) {
-            segments.push([...currentSegment]);
-            currentSegment = [];
+          // Find consecutive stations in the highlighted path
+          const stationsInPath = highlightedPath.lines
+            .find(l => l.line.id === line.id)?.stations || [];
+          
+          for (let i = 0; i < stationsInPath.length - 1; i++) {
+            if (
+              (stationsInPath[i].id === fromStation.id && stationsInPath[i + 1].id === toStation.id) ||
+              (stationsInPath[i].id === toStation.id && stationsInPath[i + 1].id === fromStation.id)
+            ) {
+              return true;
+            }
           }
+          return false;
+        };
 
-          // Handle last segment
-          if (index === line.stations.length - 1 && currentSegment.length > 0) {
-            segments.push([...currentSegment]);
-          }
-        });
+        // Determine which stations to show
+        const shouldShowStation = (station: Station) => {
+          if (!isPathfinderMode) return true;
+          if (station.id === fromStation?.id || station.id === toStation?.id) return true;
+          return highlightedStations.some(s => s.id === station.id);
+        };
 
         return (
           <div key={line.id}>
-            {/* Regular line */}
-            <Polyline
-              positions={coordinates}
-              pathOptions={{
-                color: LINE_COLORS[line.color] || '#000000',
-                weight: isSelected ? 5 : 3,
-                opacity: isHighlighted ? 0.3 : (isSelected ? 1 : 0.7),
-              }}
-              eventHandlers={{
-                click: () => handleLineClick(line)
-              }}
-            />
+            {/* Line segments */}
+            {lineSegments.map((segment, index) => {
+              const shouldShow = shouldShowSegment(segment.from, segment.to);
+              if (!shouldShow) return null;
 
-            {/* Highlighted segments */}
-            {isHighlighted && segments.map((segment, index) => (
-              <Polyline
-                key={index}
-                positions={segment}
-                pathOptions={{
-                  color: LINE_COLORS[line.color] || '#000000',
-                  weight: 5,
-                  opacity: 1,
-                }}
-              />
-            ))}
+              return (
+                <Polyline
+                  key={`${segment.from.id}-${segment.to.id}`}
+                  positions={segment.coordinates}
+                  pathOptions={{
+                    color: LINE_COLORS[line.color] || '#000000',
+                    weight: isSelected ? 5 : 3,
+                    opacity: 1
+                  }}
+                  eventHandlers={{
+                    click: () => handleLineClick(line)
+                  }}
+                />
+              );
+            })}
 
             {/* Stations */}
             {line.stations.map((station) => {
+              if (!shouldShowStation(station)) return null;
+              
               const isHighlightedStation = highlightedStations.some(s => s.id === station.id);
+              const isFromStation = station.id === fromStation?.id;
+              const isToStation = station.id === toStation?.id;
+              
               return (
                 <CircleMarker
                   key={station.id}
                   center={[station.lat, station.lng]}
-                  radius={isHighlightedStation ? 8 : 6}
+                  radius={isFromStation || isToStation ? 8 : 6}
                   pathOptions={{
                     color: LINE_COLORS[line.color] || '#000000',
                     fillColor: '#FFFFFF',
                     fillOpacity: 1,
-                    weight: isHighlightedStation ? 3 : 2,
+                    weight: isFromStation || isToStation ? 3 : 2,
                   }}
                   eventHandlers={{
                     click: () => handleLineClick(line)
                   }}
                 >
-                  <Popup>
-                    <div className="text-sm">
-                      <strong>{station.name}</strong>
-                      <br />
-                      {station.nearby && (
-                        <div className="mt-1">
-                          <strong>Nearby:</strong>
-                          <ul className="list-disc list-inside">
-                            {station.nearby.map((place, index) => (
-                              <li key={index}>{place}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {(station.interchangeStations || station.connectingStations) && (
-                        <div className="mt-1">
-                          <strong>Connections:</strong>
-                          <ul className="list-disc list-inside">
-                            {station.interchangeStations?.map((id) => (
-                              <li key={id}>Interchange: {id}</li>
-                            ))}
-                            {station.connectingStations?.map((id) => (
-                              <li key={id}>Connection: {id}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                  <Popup
+                    closeButton={false}
+                    offset={[0, -10]}
+                    className="station-popup"
+                  >
+                    <div className="text-sm font-medium">
+                      {station.name}
+                      <span className="ml-2 text-gray-500">{station.id}</span>
                     </div>
                   </Popup>
                 </CircleMarker>
