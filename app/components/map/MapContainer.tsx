@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import type { Line, Station, Path } from '~/types/map';
 import { MAP_BOUNDS, LINE_COLORS } from '~/types/map';
 import { lines } from '~/lib/line';
+import type { Map } from 'leaflet';
+import type { Dispatch, SetStateAction, ReactNode } from 'react';
 
 const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
@@ -9,113 +11,131 @@ type MapContainerProps = {
   selectedLine: Line | null;
   highlightedPath: Path | null;
   handleLineClick: (line: Line) => void;
-  setMap: (map: any) => void;
-  fromStation?: Station | null;
-  toStation?: Station | null;
+  setMap: Dispatch<SetStateAction<Map | null>>;
+  fromStation: Station | null;
+  toStation: Station | null;
+  children?: ReactNode;
 };
 
 export function MapContainer({ 
   selectedLine, 
   highlightedPath, 
   handleLineClick, 
-  setMap,
-  fromStation,
-  toStation 
+  setMap, 
+  fromStation, 
+  toStation,
+  children 
 }: MapContainerProps) {
-  const [MapComponents, setMapComponents] = useState<React.ComponentType | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  const [leafletModules, setLeafletModules] = useState<any>(null);
 
   useEffect(() => {
     async function loadMap() {
-      try {
-        const [L, { MapContainer, TileLayer, Polyline, Popup, CircleMarker, useMap }] = await Promise.all([
-          import('leaflet'),
-          import('react-leaflet')
-        ]);
-        
-        await import('leaflet/dist/leaflet.css');
+      if (typeof window === 'undefined') return;
+      
+      const [L, { MapContainer, TileLayer, Polyline, CircleMarker, Popup }] = await Promise.all([
+        import('leaflet'),
+        import('react-leaflet')
+      ]);
+      
+      await import('leaflet/dist/leaflet.css');
 
-        // Fix for default marker icons in react-leaflet
-        delete (L.Icon.Default.prototype as any)._getIconUrl;
-        L.Icon.Default.mergeOptions({
-          iconRetinaUrl: '/marker-icon-2x.png',
-          iconUrl: '/marker-icon.png',
-          shadowUrl: '/marker-shadow.png',
-        });
-
-        // Create the map component
-        const MapComponentsInner = () => {
-          // Center of KL (roughly KLCC area)
-          const center = [3.1577, 101.7114];
-          
-          // Map setter component
-          const MapSetter = () => {
-            const map = useMap();
-            useEffect(() => {
-              setMap(map);
-              
-              // Set minimum zoom to show the entire KL/Selangor area
-              map.setMinZoom(9);
-              // Set maximum zoom for street level detail
-              map.setMaxZoom(16);
-              
-              // Ensure the map stays within bounds
-              map.setMaxBounds(MAP_BOUNDS.KL_SELANGOR_BOUNDS);
-            }, [map]);
-            return null;
-          };
-
-          return (
-            <MapContainer
-              center={center as [number, number]}
-              zoom={12}
-              scrollWheelZoom={true}
-              style={{ height: '100%', width: '100%' }}
-              zoomControl={false}
-              maxBounds={MAP_BOUNDS.KL_SELANGOR_BOUNDS}
-              maxBoundsViscosity={1.0}
-              minZoom={9}
-              bounds={MAP_BOUNDS.KL_SELANGOR_BOUNDS}
-            >
-              <MapSetter />
-              <TileLayer
-                attribution='&copy; <a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-                url={`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${MAPTILER_API_KEY}`}
-                tileSize={512}
-                zoomOffset={-1}
-                minZoom={9}
-                maxZoom={16}
-                bounds={MAP_BOUNDS.VISIBLE_BOUNDS}
-                className="map-tiles-light"
-              />
-              
-              <MapLines 
-                selectedLine={selectedLine}
-                highlightedPath={highlightedPath}
-                handleLineClick={handleLineClick}
-                Polyline={Polyline}
-                CircleMarker={CircleMarker}
-                Popup={Popup}
-                fromStation={fromStation}
-                toStation={toStation}
-              />
-            </MapContainer>
-          );
-        };
-
-        setMapComponents(() => MapComponentsInner);
-      } catch (error) {
-        console.error('Error loading map:', error);
-      }
+      // Fix for default marker icons
+      delete (L.default.Icon.Default.prototype as any)._getIconUrl;
+      L.default.Icon.Default.mergeOptions({
+        iconRetinaUrl: '/marker-icon-2x.png',
+        iconUrl: '/marker-icon.png',
+        shadowUrl: '/marker-shadow.png',
+      });
+      
+      setLeafletModules({
+        MapContainer,
+        TileLayer,
+        Polyline,
+        CircleMarker,
+        Popup,
+        L: L.default
+      });
+      setIsClient(true);
     }
-
+    
     loadMap();
-  }, [selectedLine, highlightedPath, handleLineClick, setMap, fromStation, toStation]);
+  }, []);
 
-  if (!MapComponents) {
-    return <div className="w-full h-screen flex items-center justify-center">Loading map...</div>;
+  if (!isClient || !leafletModules) {
+    return <div className="h-full w-full bg-gray-100" />;
   }
 
-  return <MapComponents />;
+  const { MapContainer: Map, TileLayer, Polyline, CircleMarker, Popup } = leafletModules;
+
+  return (
+    <Map
+      center={[3.1390, 101.6869]} // KL center
+      zoom={11}
+      className="h-full w-full"
+      ref={setMap}
+      zoomControl={false}
+      maxBounds={MAP_BOUNDS.KL_SELANGOR_BOUNDS}
+      maxBoundsViscosity={1.0}
+      minZoom={9}
+      maxZoom={16}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+        url={`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${MAPTILER_API_KEY}`}
+        tileSize={512}
+        zoomOffset={-1}
+        minZoom={9}
+        maxZoom={16}
+        bounds={MAP_BOUNDS.VISIBLE_BOUNDS}
+        className="map-tiles-light"
+      />
+      
+      {/* Render train lines */}
+      {lines.map((line) => (
+        <Polyline
+          key={line.id}
+          positions={line.stations.map(station => [station.lat, station.lng])}
+          pathOptions={{
+            color: LINE_COLORS[line.color] || '#000000',
+            weight: selectedLine?.id === line.id ? 6 : 4,
+            opacity: selectedLine ? (selectedLine.id === line.id ? 1 : 0.3) : 1
+          }}
+          eventHandlers={{
+            click: () => handleLineClick(line)
+          }}
+        />
+      ))}
+
+      {/* Render stations */}
+      {lines.map((line) =>
+        line.stations.map((station) => (
+          <CircleMarker
+            key={`${line.id}-${station.id}`}
+            center={[station.lat, station.lng]}
+            radius={selectedLine?.id === line.id ? 6 : 4}
+            pathOptions={{
+              color: LINE_COLORS[line.color] || '#000000',
+              weight: 2,
+              fillColor: '#ffffff',
+              fillOpacity: 1,
+              opacity: selectedLine ? (selectedLine.id === line.id ? 1 : 0.3) : 1
+            }}
+          >
+            <Popup closeButton={false} offset={[0, -10]} className="station-popup">
+              <div className="p-2">
+                <div className="text-sm font-medium text-gray-600">{station.id}</div>
+                <div className="text-base font-medium">{station.name}</div>
+                <div className="text-xs text-gray-500 mt-1">{line.name} Line</div>
+              </div>
+            </Popup>
+          </CircleMarker>
+        ))
+      )}
+
+      {children}
+    </Map>
+  );
 }
 
 type MapLinesProps = {
@@ -229,7 +249,8 @@ function MapLines({
                     weight: isFromStation || isToStation ? 3 : 2,
                   }}
                   eventHandlers={{
-                    click: () => handleLineClick(line)
+                    mouseover: (e: any) => e.target.openPopup(),
+                    mouseout: (e: any) => e.target.closePopup()
                   }}
                 >
                   <Popup

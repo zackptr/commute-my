@@ -22,7 +22,7 @@ export function LineDetailsPanel({
   const lineColor = selectedLine ? LINE_COLORS[selectedLine.color] || '#F97316' : '#F97316';
 
   return (
-    <div className=" backdrop-blur-md rounded-lg shadow-lg">
+    <div className="backdrop-blur-md rounded-lg shadow-lg">
       <div className="p-3 border-b border-gray-200 glass-panel-tab">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

@@ -29,19 +29,24 @@ export function LinesPanel({
   return (
     <div className="p-4 space-y-2">
       {stationsByLine.map((line) => (
-        <div key={line.id} className="glass-panel-tab rounded-lg">
+        <div key={line.id} className="glass-panel-tab rounded-lg shadow-sm">
           <div 
             className="flex items-center gap-2 p-3 cursor-pointer hover:bg-gray-50/50 rounded-lg"
             onClick={() => toggleLineExpansion(line.id)}
           >
             <div className="flex items-center gap-2 flex-1">
               <div 
-                className="w-4 h-4 rounded"
+                className="w-14 h-8 rounded-md flex items-center justify-center text-white text-sm font-medium"
                 style={{
                   backgroundColor: LINE_COLORS[line.color] || '#000000'
                 }}
-              />
-              <h3 className="font-medium text-gray-900">{line.type} {line.name} Line</h3>
+              >
+                {line.id}
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900">{line.name}</h3>
+                <span className="text-sm text-gray-500">{line.type} Line</span>
+              </div>
             </div>
             <svg 
               xmlns="http://www.w3.org/2000/svg" 

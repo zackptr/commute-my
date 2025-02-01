@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useMap } from '~/hooks/useMap';
 import { MapContainer } from '~/components/map/MapContainer';
 import { ZoomControls } from '~/components/map/ZoomControls';
@@ -10,7 +10,17 @@ import { LineDetailsPanel } from '~/components/panels/LineDetailsPanel';
 import type { ViewType } from '~/types/map';
 import { lines } from '~/lib/line';
 import { Link } from 'react-router';
+import type { Route } from './+types/map';
 
+
+export function meta({}: Route.MetaArgs) {
+  return [
+      { title: "Commute - Interactive Map" },
+      { description: "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists." },
+      { property: "og:title", content: "Commute - Interactive Map" },  
+      { property: "og:description", content: "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists." },
+  ];
+}
 // Add animation styles
 const styles = {
   lineContent: `
@@ -181,10 +191,12 @@ export default function MapPage() {
   const [selectingFor, setSelectingFor] = useState<'from' | 'to' | null>(null);
   const [expandedLines, setExpandedLines] = useState<Record<string, boolean>>({});
   const [mounted, setMounted] = useState(false);
+  const [isPanelExpanded, setIsPanelExpanded] = useState(false);
+  const [map, setMap] = useState<any>(null);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const [leafletModules, setLeafletModules] = useState<any>(null);
 
   const {
-    map,
-    setMap,
     selectedLine,
     setSelectedLine,
     fromStation,
@@ -201,7 +213,25 @@ export default function MapPage() {
   } = useMap();
 
   useEffect(() => {
-    setMounted(true);
+    async function loadLeaflet() {
+      if (typeof window === 'undefined') return;
+      
+      const [L, reactLeaflet] = await Promise.all([
+        import('leaflet'),
+        import('react-leaflet')
+      ]);
+      
+      await import('leaflet/dist/leaflet.css');
+      
+      setLeafletModules({
+        L: L.default,
+        TileLayer: reactLeaflet.TileLayer,
+        Marker: reactLeaflet.Marker
+      });
+      setMounted(true);
+    }
+    
+    loadLeaflet();
   }, []);
 
   // Filter stations based on search query
@@ -234,41 +264,162 @@ export default function MapPage() {
     }));
   };
 
+  const handleLocationClick = useCallback(() => {
+    if (!map) return;
+    
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation([latitude, longitude]);
+          map.setView([latitude, longitude], 15);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          // You might want to show a toast/notification here
+        }
+      );
+    }
+  }, [map]);
+
   return (
     <div className="w-full h-screen relative">
       <style>{styles.lineContent}</style>
       
       {/* Map Container - Higher z-index for tooltips */}
-      {mounted && (
-        <div className="absolute inset-0 z-[5]">
-          <MapContainer
-            selectedLine={selectedLine}
-            highlightedPath={highlightedPath}
-            handleLineClick={handleLineClick}
-            setMap={setMap}
-            fromStation={fromStation}
-            toStation={toStation}
-          />
+      {mounted && leafletModules && (
+        <>
+          <div className="absolute inset-0 z-[5]" onClick={() => {
+            if (window.innerWidth < 768) { // Only on mobile
+              setIsPanelExpanded(false);
+              setSearchQuery('');
+              setIsSearchOpen(false);
+            }
+          }}>
+            <MapContainer
+              selectedLine={selectedLine}
+              highlightedPath={highlightedPath}
+              handleLineClick={handleLineClick}
+              setMap={setMap}
+              fromStation={fromStation}
+              toStation={toStation}
+            >
+              {/* User location marker */}
+              {userLocation && (
+                <leafletModules.Marker 
+                  position={userLocation}
+                  icon={leafletModules.L.divIcon({
+                    className: 'relative',
+                    html: `
+                      <div class="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
+                      <div class="absolute -inset-2 bg-blue-500/20 rounded-full animate-pulse"></div>
+                    `,
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8],
+                  })}
+                />
+              )}
+            </MapContainer>
+          </div>
+          
+          {/* Zoom Controls - Separate from map container for proper z-indexing */}
           <ZoomControls
-            onZoomIn={handleZoomIn}
-            onZoomOut={handleZoomOut}
+            onZoomIn={() => map?.zoomIn()}
+            onZoomOut={() => map?.zoomOut()}
+            onLocationClick={handleLocationClick}
           />
-        </div>
+        </>
       )}
 
-      {/* Panels Container - Lower z-index for base panels, but higher for actual content */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Left Panel - Higher z-index than map base but lower than tooltips */}
-        <div className="absolute left-0 bottom-0 w-[400px] h-screen glass-panel shadow-lg overflow-hidden border-r border-gray-200 pointer-events-auto z-[15]">
-          <SearchHeader
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            setIsSearchOpen={setIsSearchOpen}
-            selectedView={selectedView}
-            setSelectedView={setSelectedView}
+      {/* Mobile Search Bar - Always visible on mobile */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 md:hidden pointer-events-auto z-[25]">
+        <div className="relative" onClick={e => e.stopPropagation()}>
+          <input
+            type="text"
+            placeholder="Search for bus service or stop"
+            className="w-full h-12 bg-white/95 backdrop-blur-md text-gray-900 placeholder-gray-500 rounded-lg px-4 py-2 pl-10 pr-16 shadow-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => {
+              setIsSearchOpen(true);
+              setIsPanelExpanded(true);
+            }}
           />
+          <svg
+            className="absolute left-3 top-3.5 text-gray-400"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          {searchQuery && (
+            <button
+              className="absolute right-3 top-3 text-blue-500 font-medium"
+              onClick={() => {
+                setSearchQuery('');
+                setIsSearchOpen(false);
+              }}
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      </div>
 
-          <div className="overflow-y-auto h-[calc(100vh-110px)]">
+      {/* Panels Container */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Left Panel */}
+        <div 
+          className={`absolute left-0 bottom-0 w-full md:w-[400px] ${
+            isPanelExpanded ? 'h-[85vh]' : searchQuery ? 'h-[70vh]' : 'h-[0vh]'
+          } md:h-screen glass-panel backdrop-blur-md shadow-lg overflow-hidden border-r border-gray-200 pointer-events-auto z-[15] transition-all duration-300 ease-in-out rounded-t-xl md:rounded-none`}
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Mobile Panel Header */}
+          <div className="md:hidden px-4 py-3 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold text-gray-900">
+                {searchQuery ? 'Search Results' : 'Train Lines'}
+              </h2>
+              <button 
+                className="p-2 hover:bg-gray-100 rounded-full"
+                onClick={() => {
+                  setIsPanelExpanded(false);
+                  setSearchQuery('');
+                  setIsSearchOpen(false);
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18"/>
+                  <path d="m6 6 12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mt-2"></div>
+          </div>
+
+          {/* Desktop Search Header */}
+          <div className="hidden md:block">
+            <SearchHeader
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setIsSearchOpen={setIsSearchOpen}
+              selectedView={selectedView}
+              setSelectedView={setSelectedView}
+            />
+          </div>
+
+          <div className={`overflow-y-auto ${
+            isPanelExpanded ? 'h-[calc(85vh-100px)]' : 'h-[calc(70vh-100px)]'
+          } md:h-[calc(100vh-110px)]`}>
             {searchQuery ? (
               <SearchPanel
                 searchQuery={searchQuery}
@@ -288,6 +439,8 @@ export default function MapPage() {
                 setSelectedView={setSelectedView}
                 setSearchQuery={setSearchQuery}
                 findPath={findPath}
+                setFromStation={setFromStation}
+                setToStation={setToStation}
               />
             ) : (
               <LinesPanel
@@ -308,7 +461,12 @@ export default function MapPage() {
 
         {/* Right Panel */}
         {(selectedLine || fromStation || toStation) && (
-          <div className="absolute right-0 bottom-0 w-[340px] pointer-events-auto z-[15] pr-1 ">
+          <div 
+            className={`absolute right-0 bottom-16 md:bottom-0 w-full md:w-[340px] pointer-events-auto z-[15] p-4 transform transition-transform duration-300 ${
+              isPanelExpanded ? 'translate-y-full md:translate-y-0' : 'translate-y-0'
+            }`}
+            onClick={e => e.stopPropagation()}
+          >
             <LineDetailsPanel
               selectedLine={selectedLine}
               onBack={() => {
@@ -323,6 +481,35 @@ export default function MapPage() {
           </div>
         )}
       </div>
+
+      {/* Mobile Toggle Button - Only show when not searching */}
+      {!searchQuery && (
+        <button 
+          className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-full px-6 py-3 z-20 md:hidden pointer-events-auto flex items-center gap-2"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsPanelExpanded(prev => !prev);
+          }}
+        >
+          <span className="text-sm font-medium text-gray-600">
+            {isPanelExpanded ? 'Hide Lines' : 'Show Lines'}
+          </span>
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="#000" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className={`transform transition-transform ${isPanelExpanded ? 'rotate-180' : ''}`}
+          >
+            <path d="m18 15-6-6-6 6"/>
+          </svg>
+        </button>
+      )}
     </div>
   );
 } 

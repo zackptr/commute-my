@@ -29,7 +29,7 @@ export function SearchPanel({
           filteredStations.map((station) => (
             <div
               key={station.id}
-              className="flex items-center gap-3 p-3 bg-white hover:bg-gray-50 rounded-lg cursor-pointer border border-gray-200"
+              className="flex items-center gap-3 p-3 bg-white hover:bg-gray-50 rounded-lg cursor-pointer border border-gray-100"
               onClick={() => {
                 if (selectingFor) {
                   handleStationSelect(station);
@@ -43,19 +43,39 @@ export function SearchPanel({
               }}
             >
               <div 
-                className="w-10 h-10 rounded-full flex items-center justify-center"
+                className="flex-shrink-0 w-14 h-8 rounded-md flex items-center justify-center text-sm font-medium"
                 style={{
-                  backgroundColor: LINE_COLORS[station.lineColor] || '#000000'
+                  backgroundColor: LINE_COLORS[station.lineColor] || '#000000',
+                  color: 'white'
                 }}
               >
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                  <span className="text-xs font-medium text-gray-900">{station.id}</span>
+                {station.id}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <div className="font-medium text-gray-900 truncate">{station.name}</div>
+                  <div className="text-sm text-gray-500 truncate">
+                    {station.lineType} {station.lineName} Line
+                  </div>
+                </div>
+                <div className="text-sm text-gray-500 truncate">
+                  {station.id}
                 </div>
               </div>
-              <div>
-                <div className="font-medium text-gray-900">{station.name}</div>
-                <div className="text-sm text-gray-500">{station.lineType} {station.lineName} Line</div>
-              </div>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                className="flex-shrink-0 text-gray-400"
+              >
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
             </div>
           ))
         ) : (
