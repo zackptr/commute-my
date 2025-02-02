@@ -2,7 +2,7 @@ import { TransitionWrapper } from "~/components/TransitionWrapper";
 import type { Route } from "./+types/home";
 import { lines } from "~/lib/line";
 import { Link } from "react-router";
-import { Train } from "lucide-react";
+import { Train, Map } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -20,6 +20,13 @@ export default function Home() {
                 <section>
                     <h1 className="text-4xl md:text-6xl font-bold">Get Started</h1>
                     <p className="mt-4">Explore all MRT and LRT lines in the Klang Valley, including routes, stations, and essential details to plan your journey seamlessly.</p>
+                    
+                    {/* Map Link */}
+                    <Link to="/map" className="mt-6 inline-flex items-center gap-2 bg-sky-700 text-white px-5 py-3 rounded-lg hover:bg-sky-900 duration-300 ease-in-out">
+                        <Map className="w-5 h-5" />
+                        <span className="font-semibold">Open Interactive Map</span>
+                    </Link>
+
                     <div className="grid md:grid-cols-3 mt-10 gap-6">
                         {lines.map((line) => (
                             <Link key={line.id} to={`/line/${line.id}`} className={`font-semibold tracking-wide px-5 py-4 rounded-lg flex gap-6 items-center ${line.color} bg-opacity-50 hover:bg-opacity-60 duration-300 ease-in-out`}>
