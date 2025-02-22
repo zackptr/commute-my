@@ -1,10 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-dark-950 font-sans appearance-none;
+
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
@@ -13,4 +12,46 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+@theme {
+  --font-sans: "Open Sans", sans-serif;
+
+  --color-steel-blue-50: #f2f7fc;
+  --color-steel-blue-100: #e1edf8;
+  --color-steel-blue-200: #c9e0f4;
+  --color-steel-blue-300: #a4cdec;
+  --color-steel-blue-400: #79b2e1;
+  --color-steel-blue-500: #5995d8;
+  --color-steel-blue-600: #457ccb;
+  --color-steel-blue-700: #3b68ba;
+  --color-steel-blue-800: #355698;
+  --color-steel-blue-900: #2f4979;
+  --color-steel-blue-950: #212e4a;
+
+  --color-dark-950: #30E0E11;
+  --color-dark-900: #18181B;
+  --color-dark-800: #27272A;
+
+  /* LRT */
+  --color-lrt-ampang: #F5911F;
+  --color-lrt-ampang-2: #835018;
+  --color-lrt-sri-petaling: #8D0C06;
+  --color-lrt-sri-petaling-2: #510E0D;
+  --color-lrt-kelana-jaya: #ED0F4C;
+  --color-lrt-kelana-jaya-2: #74102C;
+
+  /* Monorail */
+  --color-monorail-kl: #81BC00;
+  --color-monorail-kl-2: #517309;
+
+  /* MRT */
+  --color-mrt-kajang: #008640;
+  --color-mrt-kajang-2: #08532D;
+  --color-mrt-putrajaya: #FBCD20;
+  --color-mrt-putrajaya-2: #746118;
+}
+
+@utility neomorphism-shadow-* {
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.35), 0px 3px 2px 0px --value(--color-*);
 }

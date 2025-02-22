@@ -22,7 +22,7 @@ export const ampangLine: Line = {
     id: "AG",
     type: "LRT",
     name: "Ampang",
-    color: "bg-lrt-ag",
+    color: "bg-lrt-ampang",
     stations: [
         { id: "AG18", name: "Ampang", lat: 3.150318, lng: 101.760049, interchangeStations: ["KG22"] },
         { id: "AG17", name: "Cahaya", lat: 3.140575, lng: 101.756677 },
@@ -49,7 +49,7 @@ export const sriPetalingLine: Line = {
     id: "SP",
     type: "LRT",
     name: "Sri Petaling",
-    color: "bg-lrt-sp",
+    color: "bg-lrt-sri-petaling",
     stations: [
         { id: "SP31", name: "Putra Heights", lat: 2.996016, lng: 101.575521, interchangeStations: ["KJ37"] },
         { id: "SP29", name: "Puchong Prima", lat: 2.999808, lng: 101.596692 },
@@ -87,7 +87,7 @@ export const kelanaJayaLine: Line = {
     id: "KJ",
     type: "LRT",
     name: "Kelana Jaya",
-    color: "bg-lrt-kj",
+    color: "bg-lrt-kelana-jaya",
     stations: [
         { id: "KJ37", name: "Putra Heights", lat: 2.996227, lng: 101.575462, interchangeStations: ["SP31"] },
         { id: "KJ36", name: "Subang Alam", lat: 3.009421, lng: 101.572281 },
@@ -133,7 +133,7 @@ export const monorailKlLine: Line = {
     id: "MR",
     type: "MR",
     name: "Monorail KL",
-    color: "bg-mr-kl",
+    color: "bg-monorail-kl",
     stations: [
         { id: "MR1", name: "KL Sentral", lat: 3.132852, lng: 101.687817, nearby: ["NU Sentral"], connectingStations: ["KJ15"] },
         { id: "MR2", name: "Tun Sambanthan", lat: 3.13132, lng: 101.69085 },
@@ -153,7 +153,7 @@ export const kajangLine: Line = {
     id: "KG",
     type: "MRT",
     name: "Kajang",
-    color: "bg-mrt-kg",
+    color: "bg-mrt-kajang",
     stations: [
         { id: "KG04", name: "Kwasa Damansara", lat: 3.176146, lng: 101.572052, interchangeStations: ["PY01"] },
         { id: "KG05", name: "Kwasa Sentral", lat: 3.170112, lng: 101.564651 },
@@ -191,7 +191,7 @@ export const putrajayaLine: Line = {
     id: "PY",
     type: "MRT",
     name: "Putrajaya",
-    color: "bg-mrt-py",
+    color: "bg-mrt-putrajaya",
     stations: [
         { id: "PY01", name: "Kwasa Damansara", lat: 3.1763324, lng: 101.5721456, interchangeStations: ["KG04"] },
         { id: "PY03", name: "Kampung Selamat", lat: 3.197266, lng: 101.578499, nearby: ["Anytime Fitness SqWhere"] },

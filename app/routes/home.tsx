@@ -2,7 +2,8 @@ import { TransitionWrapper } from "~/components/TransitionWrapper";
 import type { Route } from "./+types/home";
 import { lines } from "~/lib/line";
 import { Link } from "react-router";
-import { Train } from "lucide-react";
+import { LucideArrowUpDown, LucideCircleDot, LucideMapPin, Train } from "lucide-react";
+import { Button } from "~/components/Button";
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -18,7 +19,44 @@ export default function Home() {
         <main className="container mx-auto px-8 py-20">
             <TransitionWrapper>
                 <section>
-                    <h1 className="text-4xl md:text-6xl font-bold">Get Started</h1>
+                    <div className="bg-dark-900 px-5 py-5 rounded-md border border-dark-800 grid md:grid-cols-2 gap-4">
+                        <div>
+                            <p className="font-semibold">Explore Klang Valley</p>
+                            <form className="mt-5">
+                                <div className="relative rounded-md border border-dark-800">
+                                    <div className="relative flex flex-row gap-4 items-center border-b border-b-dark-800">
+                                        <LucideCircleDot className="absolute w-4 h-4 ml-4" />
+                                        <input className="pl-12 py-2 pr-4 w-full placeholder:text-sm" placeholder="Origin" disabled />
+                                    </div>
+                                    <div className="relative flex flex-row gap-4 items-center border-b border-b-dark-800">
+                                        <LucideMapPin className="absolute w-4 h-4 ml-4" />
+                                        <input className="pl-12 py-2 pr-4 w-full placeholder:text-sm" placeholder="Destination" disabled />
+                                    </div>
+                                    <div className="absolute top-[calc(50%-1.25rem)] right-4">
+                                        <div className="p-3 rounded-full bg-steel-blue-200">
+                                            <LucideArrowUpDown className="w-3.5 h-3.5 text-steel-blue-800" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <Button.Root className="mt-6 w-full" type="submit" disabled>
+                                    <Button.Text>Search Route</Button.Text>
+                                </Button.Root>
+                            </form>
+                        </div>
+                        <div className="mt-12 md:mt-0">
+                            <p className="font-semibold">Line Route</p>
+                            <div className="grid grid-cols-2 gap-3 mt-5">
+                                {lines.map((line) => (
+                                    <Link to={`/line/${line.id}`}>
+                                        <Button.Root className="w-full" variant={`${line.type}_${line.id}`}>
+                                            <Button.Text>{line.type} {line.name}</Button.Text>
+                                        </Button.Root>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    {/* <h1 className="text-4xl md:text-6xl font-bold">Get Started</h1>
                     <p className="mt-4">Explore all MRT and LRT lines in the Klang Valley, including routes, stations, and essential details to plan your journey seamlessly.</p>
                     <div className="grid md:grid-cols-3 mt-10 gap-6">
                         {lines.map((line) => (
@@ -30,7 +68,7 @@ export default function Home() {
                                 {line.type} {line.name} Line
                             </Link>
                         ))}
-                    </div>
+                    </div> */}
                 </section>
                 <section className="mt-20">
                     <h1 className="text-2xl md:text-4xl font-bold">What is Commute?</h1>
