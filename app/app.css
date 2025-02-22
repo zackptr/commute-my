@@ -2,8 +2,7 @@
 
 html,
 body {
-  @apply bg-white dark:bg-dark-950 font-sans appearance-none;
-
+  @apply font-sans bg-white text-black dark:bg-dark-950 dark:text-white appearance-none;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
