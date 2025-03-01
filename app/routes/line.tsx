@@ -44,11 +44,11 @@ export default function Line() {
                         {line.stations.map((station, index) => (
                             <div id={station.id} key={station.id} className="flex space-x-4">
                                 <div className="flex flex-col items-center min-h-max">
-                                    <div className={`w-8 h-8 rounded-full ${line.color} flex items-center justify-center`}>
+                                    <div className={`w-8 h-8 rounded-full ${line.bgColor} flex items-center justify-center`}>
                                         <Train className="w-5 h-5 text-white" />
                                     </div>
                                     <div className="flex-grow">
-                                        {index < line.stations.length - 1 && <div className={`w-1 ${station.nearby || station.connectingStations || station.interchangeStations ? "h-full": "h-6"} ${line.color} mt-2`} />}
+                                        {index < line.stations.length - 1 && <div className={`w-1 ${station.nearby || station.connectingStations || station.interchangeStations ? "h-full": "h-6"} ${line.bgColor} mt-2`} />}
                                     </div>
                                 </div>
                                 <div>
@@ -82,7 +82,7 @@ export default function Line() {
                                                         const line = getLineByStation(intStationId);
 
                                                         return intStation && line && (
-                                                            <Link to={`/line/${line.id}#${intStation.id}`} key={intStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
+                                                            <Link to={`/line/${line.id}#${intStation.id}`} key={intStation.id} className={`flex items-center space-x-2 ${line.bgColor} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
                                                                 <Train className="w-4 h-4" />
                                                                 <span className="text-sm">{line.type} {intStation.name} {intStation.id}</span>
                                                             </Link>
@@ -100,7 +100,7 @@ export default function Line() {
                                                         const line = getLineByStation(connStationId);
 
                                                         return connStation && line && (
-                                                            <Link to={`/line/${line.id}#${connStation.id}`} key={connStation.id} className={`flex items-center space-x-2 ${line.color} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
+                                                            <Link to={`/line/${line.id}#${connStation.id}`} key={connStation.id} className={`flex items-center space-x-2 ${line.bgColor} bg-opacity-50 px-5 py-2 rounded-lg hover:bg-opacity-60 duration-300 ease-in-out`}>
                                                                 <Train className="w-4 h-4" />
                                                                 <span className="text-sm">{line.type} {connStation.name} {connStation.id}</span>
                                                             </Link>
