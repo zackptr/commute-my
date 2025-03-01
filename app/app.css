@@ -32,23 +32,29 @@ html {
   --color-dark-900: #18181B;
   --color-dark-800: #27272A;
 
-  /* LRT */
-  --color-lrt-ampang: #F5911F;
-  --color-lrt-ampang-2: #835018;
-  --color-lrt-sri-petaling: #8D0C06;
-  --color-lrt-sri-petaling-2: #510E0D;
-  --color-lrt-kelana-jaya: #ED0F4C;
-  --color-lrt-kelana-jaya-2: #74102C;
+  /* LRT Ampang */
+  --color-tangerine-500: #F5911F;
+  --color-tangerine-900: #835018;
 
-  /* Monorail */
-  --color-monorail-kl: #81BC00;
-  --color-monorail-kl-2: #517309;
+  /* LRT Sri Petaling */
+  --color-crimson-500: #8D0C06;
+  --color-crimson-900: #510E0D;
 
-  /* MRT */
-  --color-mrt-kajang: #008640;
-  --color-mrt-kajang-2: #08532D;
-  --color-mrt-putrajaya: #FBCD20;
-  --color-mrt-putrajaya-2: #746118;
+  /* LRT Kelana Jaya */
+  --color-magenta-500: #ED0F4C;
+  --color-magenta-900: #74102C;
+
+  /* Monorail KL */
+  --color-chartreuse-500: #81BC00;
+  --color-chartreuse-900: #517309;
+
+  /* MRT Kajang */
+  --color-jade-500: #008640;
+  --color-jade-900: #08532D;
+
+  /* MRT Putrajaya */
+  --color-saffron-500: #FBCD20;
+  --color-saffron-900: #746118;
 }
 
 @utility neomorphism-shadow-* {

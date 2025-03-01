@@ -19,14 +19,14 @@ const ButtonRoot: React.FC<ButtonRootProps> = ({ children, variant = "primary", 
         <ButtonContext.Provider value={{ variant }}>
             <button
                 className={twMerge(
-                    "transition transition-color duration-200 ease-in-out rounded-md flex flex-row items-center justify-center px-4 py-2 bg-gradient-to-b disabled:bg-none disabled:[box-shadow:none]",
-                    variant === "primary" && "from-steel-blue-600 to-steel-blue-700  border-steel-blue-800 hover:from-steel-blue-700 hover:to-steel-blue-800 hover:border-steel-blue-900 neomorphism-shadow-steel-blue-900 disabled:bg-steel-blue-950 disabled:text-steel-blue-700",
-                    variant === "LRT_AG" && "bg-lrt-ampang/60 neomorphism-shadow-lrt-ampang-2",
-                    variant === "LRT_SP" && "bg-lrt-sri-petaling/60 neomorphism-shadow-lrt-sri-petaling-2",
-                    variant === "LRT_KJ" && "bg-lrt-kelana-jaya/60 neomorphism-shadow-lrt-kelana-jaya-2",
-                    variant === "MR_MR" && "bg-monorail-kl/60 neomorphism-shadow-monorail-kl-2",
-                    variant === "MRT_KG" && "bg-mrt-kajang/60 neomorphism-shadow-mrt-kajang-2",
-                    variant === "MRT_PY" && "bg-mrt-putrajaya/60 neomorphism-shadow-mrt-putrajaya-2",
+                    "transition transition-color duration-250 ease-in-out rounded-md flex flex-row items-center justify-center px-4 py-2 bg-gradient-to-b disabled:bg-none disabled:[box-shadow:none]",
+                    variant === "primary" && "from-steel-blue-600 to-steel-blue-700 border-steel-blue-800 hover:from-steel-blue-700 hover:to-steel-blue-800 hover:border-steel-blue-900 neomorphism-shadow-steel-blue-900 disabled:bg-steel-blue-950 disabled:text-steel-blue-700",
+                    variant === "tangerine" && "bg-tangerine-500/60 hover:bg-tangerine-900 neomorphism-shadow-tangerine-900",
+                    variant === "crimson" && "bg-crimson-500/60 hover:bg-crimson-900 neomorphism-shadow-crimson-900",
+                    variant === "magenta" && "bg-magenta-500/60 hover:bg-magenta-900 neomorphism-shadow-magenta-900",
+                    variant === "chartreuse" && "bg-chartreuse-500/60 hover:bg-chartreuse-900 neomorphism-shadow-chartreuse-900",
+                    variant === "jade" && "bg-jade-500/60 hover:bg-jade-900 neomorphism-shadow-jade-900",
+                    variant === "saffron" && "bg-saffron-500/60 hover:bg-saffron-900 neomorphism-shadow-saffron-900",
                     className,
                 )}
                 {...props}

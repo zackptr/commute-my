@@ -48,7 +48,7 @@ export default function Home() {
                             <div className="grid grid-cols-2 gap-3 mt-5">
                                 {lines.map((line) => (
                                     <Link to={`/line/${line.id}`}>
-                                        <Button.Root className="w-full" variant={`${line.type}_${line.id}`}>
+                                        <Button.Root className="w-full" variant={line.color}>
                                             <Button.Text>{line.type} {line.name}</Button.Text>
                                         </Button.Root>
                                     </Link>
