@@ -44,7 +44,7 @@ export default function Home() {
                                 <p className="text-yellow-500 text-xs mt-4">This feature is not currently available. We are working to implement it in a future update and appreciate your patience.</p>
                             </form>
                         </div>
-                        <div className="mt-12 md:mt-0">
+                        <div className="mt-4 md:mt-0">
                             <p className="font-semibold">Line Route</p>
                             <div className="grid grid-cols-2 gap-3 mt-5">
                                 {lines.map((line) => (
