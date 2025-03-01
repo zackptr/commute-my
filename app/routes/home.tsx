@@ -16,21 +16,21 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
     return (
-        <main className="container mx-auto px-8 py-20">
+        <main className="container mx-auto px-8 py-14 md:py-20">
             <TransitionWrapper>
                 <section>
                     <div className="bg-dark-900 px-5 py-5 rounded-md border border-dark-800 grid md:grid-cols-2 gap-4">
                         <div>
-                            <p className="font-semibold">Explore Klang Valley</p>
+                            <p className="font-semibold">Let's Explore Klang Valley</p>
                             <form className="mt-5">
                                 <div className="relative rounded-md border border-dark-800">
                                     <div className="relative flex flex-row gap-4 items-center border-b border-b-dark-800">
-                                        <LucideCircleDot className="absolute w-4 h-4 ml-4" />
-                                        <input className="pl-12 py-2 pr-4 w-full placeholder:text-sm" placeholder="Origin" disabled />
+                                        <LucideCircleDot className="absolute w-4 h-4 ml-6 text-steel-blue-200" />
+                                        <input className="pl-16 py-3.5 pr-4 w-full placeholder:text-sm disabled:placeholder:text-dark-800" placeholder="Origin" disabled />
                                     </div>
-                                    <div className="relative flex flex-row gap-4 items-center border-b border-b-dark-800">
-                                        <LucideMapPin className="absolute w-4 h-4 ml-4" />
-                                        <input className="pl-12 py-2 pr-4 w-full placeholder:text-sm" placeholder="Destination" disabled />
+                                    <div className="relative flex flex-row gap-4 items-center">
+                                        <LucideMapPin className="absolute w-4 h-4 ml-6 text-steel-blue-200" />
+                                        <input className="pl-16 py-3.5 pr-4 w-full placeholder:text-sm disabled:placeholder:text-dark-800" placeholder="Destination" disabled />
                                     </div>
                                     <div className="absolute top-[calc(50%-1.25rem)] right-4">
                                         <div className="p-3 rounded-full bg-steel-blue-200">
@@ -41,6 +41,7 @@ export default function Home() {
                                 <Button.Root className="mt-6 w-full" type="submit" disabled>
                                     <Button.Text>Search Route</Button.Text>
                                 </Button.Root>
+                                <p className="text-yellow-500 text-xs mt-4">This feature is not currently available. We are working to implement it in a future update and appreciate your patience.</p>
                             </form>
                         </div>
                         <div className="mt-12 md:mt-0">
