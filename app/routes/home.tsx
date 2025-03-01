@@ -2,7 +2,7 @@ import { TransitionWrapper } from "~/components/TransitionWrapper";
 import type { Route } from "./+types/home";
 import { lines } from "~/lib/line";
 import { Link } from "react-router";
-import { LucideArrowUpDown, LucideCircleDot, LucideMapPin, Train } from "lucide-react";
+import { LucideArrowUpDown, LucideCircleDot, LucideMapPin, LucideTrain, Train } from "lucide-react";
 import { Button } from "~/components/Button";
 
 export function meta({}: Route.MetaArgs) {
@@ -49,7 +49,7 @@ export default function Home() {
                             <div className="grid grid-cols-2 gap-3 mt-5">
                                 {lines.map((line) => (
                                     <Link to={`/line/${line.id}`}>
-                                        <Button.Root className="w-full" variant={line.color}>
+                                        <Button.Root className="w-full h-full" variant={line.color}>
                                             <Button.Text>{line.type} {line.name}</Button.Text>
                                         </Button.Root>
                                     </Link>
