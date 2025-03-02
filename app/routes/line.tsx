@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import { getLineById, getLineByStation, getStation } from "~/lib/line";
 import { Link, useParams } from "react-router";
-import { Train, ShoppingBag, Building, TreesIcon as Tree, ArrowLeftFromLine, Footprints, ArrowUpDown, MapPin } from "lucide-react";
+import { Train, ShoppingBag, Building, TreesIcon as Tree, ArrowLeftFromLine, Footprints, ArrowUpDown, MapPin, Clock, MoonStar } from "lucide-react";
 import { useNavigate } from "react-router";
 import { TransitionWrapper } from "~/components/TransitionWrapper";
 
@@ -10,6 +10,10 @@ const icons = {
     park: Tree,
     default: Building,
 };
+
+function getMosqueGoogleMapsUrl(name: string, lat: number, lng: number): string {
+    return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${encodeURIComponent(name)}`;
+}
 
 function getNearbyIcon(place: string): React.ElementType {
     if (place.toLowerCase().includes('mall') || place.toLowerCase().includes('shopping')) return icons.mall;
@@ -70,6 +74,35 @@ export default function Line() {
                                                             </div>
                                                         )
                                                     })}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {station.mosques && (
+                                            <div className="space-y-2">
+                                                <h3 className="flex items-center"><MoonStar className="w-4 h-4 mr-2" />Nearby Mosques</h3>
+                                                <div className="grid md:grid-cols-4 gap-2 md:gap-4 mt-2">
+                                                    {station.mosques.map((mosque, ix) => (
+                                                        <a 
+                                                            key={ix} 
+                                                            href={getMosqueGoogleMapsUrl(mosque.name, mosque.lat, mosque.lng)}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="bg-gray-800 px-5 py-3 rounded-lg space-y-2 hover:bg-gray-700 transition-colors"
+                                                        >
+                                                            <div className="flex items-center space-x-2">
+                                                                <MoonStar className="w-4 h-4 flex-shrink-0" />
+                                                                <span className="text-sm font-medium">{mosque.name}</span>
+                                                            </div>
+                                                            <div className="flex items-center space-x-2 text-gray-400">
+                                                                <MapPin className="w-3 h-3 flex-shrink-0" />
+                                                                <span className="text-xs">{mosque.distance}</span>
+                                                            </div>
+                                                            <div className="flex items-center space-x-2 text-gray-400">
+                                                                <Clock className="w-3 h-3 flex-shrink-0" />
+                                                                <span className="text-xs">{mosque.walkingTime}</span>
+                                                            </div>
+                                                        </a>
+                                                    ))}
                                                 </div>
                                             </div>
                                         )}
