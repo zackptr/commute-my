@@ -65,7 +65,9 @@ export const sriPetalingLine: Line = {
     color: "crimson",
     bgColor: "bg-crimson-500",
     stations: [
-        { id: "SP31", name: "Putra Heights", lat: 2.996016, lng: 101.575521, interchangeStations: ["KJ37"] },
+        { id: "SP31", name: "Putra Heights", lat: 2.996016, lng: 101.575521, interchangeStations: ["KJ37"], mosques: [
+            { name: "Masjid Putra Height", distance: "220m", walkingTime: "3 min", lat: 2.9975838904405965, lng: 101.57626199789122 }
+        ] },
         { id: "SP29", name: "Puchong Prima", lat: 2.999808, lng: 101.596692 },
         { id: "SP28", name: "Puchong Perdana", lat: 3.007913, lng: 101.605021 },
         { id: "SP27", name: "Bandar Puteri", lat: 3.017111, lng: 101.612855 },
@@ -78,14 +80,18 @@ export const sriPetalingLine: Line = {
         { id: "SP19", name: "Awan Besar", lat: 3.062131, lng: 101.670555 },
         { id: "SP18", name: "Sri Petaling", lat: 3.061445, lng: 101.687074 },
         { id: "SP17", name: "Bukit Jalil", lat: 3.058196, lng: 101.692125, nearby: ["Endah Parade"] },
-        { id: "SP16", name: "Sungai Besi", lat: 3.063842, lng: 101.708062, interchangeStations: ["PY29"] },
+        { id: "SP16", name: "Sungai Besi", lat: 3.063842, lng: 101.708062, interchangeStations: ["PY29"], mosques: [
+            { name: "Masjid Jamek Sungai Besi (Ibnu Khaldun)", distance: "220m", walkingTime: "3 min", lat: 3.064344710399052, lng: 101.70925452938673 }
+        ] },
         { id: "SP15", name: "Bandar Tasik Selatan", lat: 3.076058, lng: 101.711107 },
         { id: "SP14", name: "Bandar Tun Razak", lat: 3.089576, lng: 101.712466 },
         { id: "SP13", name: "Salak Selatan", lat: 3.102201, lng: 101.706179 },
         { id: "SP12", name: "Cheras", lat: 3.112609, lng: 101.714178 },
         { id: "SP11", name: "Chan Sow Lin", lat: 3.128105, lng: 101.715637, nearby: ["The Metro Mall"], interchangeStations: ["PY24", "AG11"] },
         { id: "SP10", name: "Pudu", lat: 3.134879, lng: 101.711957, interchangeStations: ["AG10"] },
-        { id: "SP9", name: "Hang Tuah", lat: 3.140012, lng: 101.705984, nearby: ["Berjaya Times Square", "The Mitsui Shopping Park LaLaport Bukit Bintang City Centre"], interchangeStations: ["MR4", "AG9"] },
+        { id: "SP9", name: "Hang Tuah", lat: 3.140012, lng: 101.705984, nearby: ["Berjaya Times Square", "The Mitsui Shopping Park LaLaport Bukit Bintang City Centre"], interchangeStations: ["MR4", "AG9"], mosques: [
+            { name: "Masjid Al Bukhari", distance: "270m", walkingTime: "4 min", lat: 3.1391978, lng: 101.7046318 }
+        ] },
         { id: "SP8", name: "Plaza Rakyat", lat: 3.144049, lng: 101.702105, interchangeStations: ["AG8", "KG17"] },
         { id: "SP7", name: "Masjid Jamek", lat: 3.14927, lng: 101.696377, interchangeStations: ["AG7", "KJ13"] },
         { id: "SP6", name: "Bandaraya", lat: 3.155567, lng: 101.694485, nearby: ["SOGO Kuala Lumpur"], interchangeStations: ["AG6"] },
@@ -104,15 +110,23 @@ export const kelanaJayaLine: Line = {
     color: "magenta",
     bgColor: "bg-magenta-500",
     stations: [
-        { id: "KJ37", name: "Putra Heights", lat: 2.996227, lng: 101.575462, interchangeStations: ["SP31"] },
+        { id: "KJ37", name: "Putra Heights", lat: 2.996227, lng: 101.575462, interchangeStations: ["SP31"], mosques: [
+            { name: "Masjid Putra Height", distance: "220m", walkingTime: "3 min", lat: 2.9975838904405965, lng: 101.57626199789122 }
+        ] },
         { id: "KJ36", name: "Subang Alam", lat: 3.009421, lng: 101.572281 },
         { id: "KJ35", name: "Alam Megah", lat: 3.023151, lng: 101.572029 },
-        { id: "KJ34", name: "USJ 21", lat: 3.029881, lng: 101.581711, nearby: ["Main Place Mall"] },
+        { id: "KJ34", name: "USJ 21", lat: 3.029881, lng: 101.581711, nearby: ["Main Place Mall"], mosques: [
+            { name: "Masjid Al-Madaniah", distance: "590m", walkingTime: "7 min", lat: 3.0313921849430185, lng: 101.58398391263445 }
+        ] },
         { id: "KJ33", name: "Wawasan", lat: 3.035062, lng: 101.588348, nearby: ["The 19 USJ City Mall (Palazzo 19 Mall)"] },
-        { id: "KJ32", name: "Taipan", lat: 3.04815, lng: 101.590233 },
+        { id: "KJ32", name: "Taipan", lat: 3.04815, lng: 101.590233, mosques: [
+            { name: "Masjid Al-Falah USJ 9", distance: "580m", walkingTime: "7 min", lat: 3.0440662790664836, lng: 101.58719996488976 }
+        ] },
         { id: "KJ31", name: "USJ 7", lat: 3.054956, lng: 101.592194, nearby: ["DA MEN Mall"] },
         { id: "KJ30", name: "SS 18", lat: 3.067182, lng: 101.585945 },
-        { id: "KJ29", name: "SS 15", lat: 3.075972, lng: 101.585983, nearby: ["SS15 Courtyard"] },
+        { id: "KJ29", name: "SS 15", lat: 3.075972, lng: 101.585983, nearby: ["SS15 Courtyard"], mosques: [
+            { name: "Masjid Darul Ehsan Subang Jaya", distance: "670m", walkingTime: "8 min", lat: 3.0804905148779658, lng: 101.58554713022856 }
+        ] },
         { id: "KJ28", name: "Subang Jaya", lat: 3.08466, lng: 101.588127, nearby: ["NU Empire Shopping Gallery", "Subang Parade Shopping Centre", "AEON BiG Subang Jaya"] },
         { id: "KJ27", name: "CGC Glenmarie", lat: 3.094732, lng: 101.590622 },
         { id: "KJ26", name: "Ara Damansara", lat: 3.108643, lng: 101.586372, nearby: ["Evolve Concept Mall"] },
@@ -134,7 +148,9 @@ export const kelanaJayaLine: Line = {
         ] },
         { id: "KJ16", name: "Bank Rakyat Bangsar", lat: 3.127588, lng: 101.679062 },
         { id: "KJ15", name: "KL Sentral", lat: 3.13442, lng: 101.68625, nearby: ["NU Sentral"], connectingStations: ["MR1"] },
-        { id: "KJ14", name: "Pasar Seni", lat: 3.142439, lng: 101.69531, interchangeStations: ["PY14"] },
+        { id: "KJ14", name: "Pasar Seni", lat: 3.142439, lng: 101.69531, interchangeStations: ["PY14"], mosques: [
+            { name: "Masjid Negara", distance: "870m", walkingTime: "12 min", lat: 3.1419713907686377, lng: 101.69174639937577 }
+        ] },
         { id: "KJ13", name: "Masjid Jamek", lat: 3.149714, lng: 101.696815, interchangeStations: ["AG7", "SP7"], mosques: [
             { name: "Masjid Jamek Sultan Abdul Samad", distance: "110m", walkingTime: "2 min", lat: 3.1489147, lng: 101.695355 }
         ] },
@@ -147,13 +163,17 @@ export const kelanaJayaLine: Line = {
         ] },
         { id: "KJ9", name: "Ampang Park", lat: 3.159894, lng: 101.719017, nearby: ["The LINC KL", "Intermark Mall"], connectingStations: ["PY20"] },
         { id: "KJ8", name: "Damai", lat: 3.164406, lng: 101.724489 },
-        { id: "KJ7", name: "Dato' Keramat", lat: 3.16509, lng: 101.73184 },
+        { id: "KJ7", name: "Dato' Keramat", lat: 3.16509, lng: 101.73184, mosques: [
+            { name: "Masjid Al-Akram Datuk Keramat", distance: "340m", walkingTime: "4 min", lat: 3.1664534702473905, lng: 101.72950400592192 }
+        ] },
         { id: "KJ6", name: "Jelatek", lat: 3.167204, lng: 101.735344, nearby: ["Datum Jelatek Shopping Centre"] },
         { id: "KJ5", name: "Setiawangsa", lat: 3.17576, lng: 101.73584, mosques: [
             { name: "Masjid Muadz bin Jabal", distance: "510m", walkingTime: "6 min", lat: 3.1779773, lng: 101.7361406 }
         ] },
         { id: "KJ4", name: "Sri Rampai", lat: 3.199176, lng: 101.73747, nearby: ["Wangsa Walk Mall"] },
-        { id: "KJ3", name: "Wangsa Maju", lat: 3.205751, lng: 101.731796 },
+        { id: "KJ3", name: "Wangsa Maju", lat: 3.205751, lng: 101.731796, mosques: [
+            { name: "Masjid Usamah Bin Zaid", distance: "750m", walkingTime: "10 min", lat: 3.2029713366589996, lng: 101.73692327782841 }
+        ] },
         { id: "KJ2", name: "Taman Melati", lat: 3.219558, lng: 101.72197, nearby: ["M3 Shopping Mall"], mosques: [
             { name: "Masjid Salahudin Al-Ayyubi", distance: "370m", walkingTime: "5 min", lat: 3.2225904, lng: 101.7177032 }
         ] },
@@ -170,7 +190,9 @@ export const monorailKlLine: Line = {
     stations: [
         { id: "MR1", name: "KL Sentral", lat: 3.132852, lng: 101.687817, nearby: ["NU Sentral"], connectingStations: ["KJ15"] },
         { id: "MR2", name: "Tun Sambanthan", lat: 3.13132, lng: 101.69085 },
-        { id: "MR3", name: "Maharajalela", lat: 3.138743, lng: 101.699268 },
+        { id: "MR3", name: "Maharajalela", lat: 3.138743, lng: 101.699268, mosques: [
+            { name: "Masjid Al-Sultan Abdullah", distance: "190m", walkingTime: "3 min", lat: 3.1397038347130954, lng: 101.69941427658394 }
+        ] },
         { id: "MR4", name: "Hang Tuah", lat: 3.140511, lng: 101.706029, nearby: ["Berjaya Times Square", "The Mitsui Shopping Park LaLaport Bukit Bintang City Centre"], interchangeStations: ["AG9", "SP9"] },
         { id: "MR5", name: "Imbi", lat: 3.14283, lng: 101.70945, nearby: ["Berjaya Times Square"] },
         { id: "MR6", name: "Bukit Bintang", lat: 3.146022, lng: 101.7115, connectingStations: ["KG18A"] },
@@ -249,6 +271,9 @@ export const kajangLine: Line = {
       lat: 3.142293265,
       lng: 101.6955642,
       interchangeStations: ["KJ14"],
+      mosques: [
+        { name: "Masjid Negara", distance: "870m", walkingTime: "12 min", lat: 3.1419713907686377, lng: 101.69174639937577 }
+      ],
     },
     {
       id: "KG17",
@@ -383,8 +408,12 @@ export const putrajayaLine: Line = {
         { id: "PY24", name: "Chan Sow Lin", lat: 3.12839, lng: 101.71663, nearby: ["The Metro Mall"], interchangeStations: ["AG11", "SP11"] },
         { id: "PY27", name: "Kuchai", lat: 3.089546, lng: 101.694124 },
         { id: "PY28", name: "Taman Naga Emas", lat: 3.077688, lng: 101.699867 },
-        { id: "PY29", name: "Sungai Besi", lat: 3.063737, lng: 101.7084, interchangeStations: ["SP16"] },
-        { id: "PY31", name: "Serdang Raya Utara", lat: 3.041674, lng: 101.704928 },
+        { id: "PY29", name: "Sungai Besi", lat: 3.063737, lng: 101.7084, interchangeStations: ["SP16"], mosques: [
+            { name: "Masjid Jamek Sungai Besi (Ibnu Khaldun)", distance: "220m", walkingTime: "3 min", lat: 3.064344710399052, lng: 101.70925452938673 }
+        ] },
+        { id: "PY31", name: "Serdang Raya Utara", lat: 3.041674, lng: 101.704928, mosques: [
+            { name: "Masjid Al-Islah Serdang Raya", distance: "310m", walkingTime: "4 min", lat: 3.043026344004756, lng: 101.70343677890706 }
+        ] },
         { id: "PY32", name: "Serdang Raya Selatan", lat: 3.028463, lng: 101.707514 },
         { id: "PY33", name: "Serdang Jaya", lat: 3.0216, lng: 101.709 },
         { id: "PY34", name: "UPM", lat: 3.008489, lng: 101.705396 },
