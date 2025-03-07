@@ -10,16 +10,21 @@
     "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.svg"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-popover": "^1.1.6",
     "@react-router/cloudflare": "^7.1.1",
     "@react-router/serve": "^7.1.1",
     "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "1.0.0",
     "isbot": "^5.1.17",
-    "lucide-react": "^0.473.0",
+    "lucide-react": "^0.479.0",
     "motion": "^11.18.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.1.1",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@react-router/dev": "^7.1.1",
