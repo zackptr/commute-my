@@ -13,9 +13,9 @@ export function meta({}: Route.MetaArgs) {
 
 export default function About() {
     return (
-        <main className="container mx-auto px-6 py-16 min-h-screen flex flex-col">
+        <main className="container mx-auto px-8 py-10 min-h-screen flex flex-col">
             <TransitionWrapper>
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight">About</h1>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">About</h1>
                     <h2 className="mt-8 text-lg md:text-xl font-semibold">
                         The Best Way to Plan Your Trip
                     </h2>
