@@ -20,7 +20,7 @@ export default function Donate() {
                         Ko-fi
                     </Link>
                     <p className="flex gap-3">
-                        <LucideWallet className="w-5 h-5" />
+                        <LucideWallet className="w-5 h-5 flex-shrink-0" />
                         Ethereum
                         <code className="break-all">0x57858A202589D33d47D3322C26380a2142388E64</code>
                     </p>
